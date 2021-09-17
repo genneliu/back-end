@@ -30,6 +30,12 @@
       <input type="submit" id="submitButton">
   </form>
 
+  <form id="shareMusic"> 
+    <h3> What are some songs you've been jamming to lately? </h3>
+      <input type= "text" id="songForm"> 
+      <input type="submit" id="submitSongButton">
+  </form>
+
   <div class="fortune-box">
     <h2 > Your Fortunes For Today </h2>
     <button id="fortuneButton">Lucky Fortune</button>
@@ -43,6 +49,7 @@
 
       const listElement = document.querySelector("ul");
       const postElement = document.getElementById("userPost")
+      const songElement = document.getElementById("shareMusic")
 
       document.getElementById("complimentButton").onclick = function () {
         axios.get("http://localhost:4000/api/compliment/")
@@ -104,6 +111,19 @@
             postElement.appendChild(displayPost)
         });
       };
+
+      document.getElementById("submitSongButton").onclick = function (e) {
+        e.preventDefault();
+        let songInput = document.getElementById("songForm").value;
+        axios.post("http://localhost:4000/api/song", { text: songInput } )
+          .then(function (res) {
+            const song= res.data;
+            let displaySong = document.createElement("p");
+            displaySong.textContent = song;
+            shareMusic.appendChild(displaySong)
+        });
+      };
+
 
 
     </script>

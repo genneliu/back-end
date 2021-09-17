@@ -100,3 +100,9 @@ ul {
     margin: 2rem 0;
     padding: 2rem;
 }
+
+#shareMusic {
+    border: 3px dotted teal;
+    margin: 2rem 0;
+    padding: 2rem;
+}

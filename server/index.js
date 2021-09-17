@@ -8,6 +8,7 @@ app.use(cors());
 app.use(express.json()); // When we want to be able to accept JSON.
 
 let userPost = [];
+let song = [];
 
 //compliment
 app.get("/api/compliment", (req, res) => {
@@ -62,6 +63,12 @@ app.post("/api/post", (req, res) => {
   console.log(req.body.text)
   userPost.push(req.body.text)
   res.status(200).send(userPost);
+});
+
+app.post("/api/song", (req, res) => {
+  console.log(req.body.text)
+  song.push(req.body.text)
+  res.status(200).send(song);
 });
 
 
