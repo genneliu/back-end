@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/client/styles.css"/>
+    <title>Back End Assessment</title>
+  </head>
+
+  <body class="container">
+
+    <h1> Everything is Groovy </h1>
+
+    <button id="complimentButton">Get a compliment</button>
+
+
+  <div class="feelings-box">
+    <form id="feelings">
+      <h3> How do you feel today? </h3>
+        <input type="radio" id= "happy" name= "feelings" value="happy"> <label for="happy"> Happy </label>
+        <input type="radio" id = "sad" name= "feelings" value="sad"> <label for="sad"> Sad </label>
+        <input type="radio" id = "angry" name= "feelings" value="angry"> <label for="sad"> Angry </label>
+    </form>
+  </div>
+
+  <form id="userPost"> 
+    <h3> Write Down Your Goals Here </h3>
+      <input type= "text" id="textForm"> 
+      <input type="submit" id="submitButton">
+  </form>
+
+  <div class="fortune-box">
+    <h2 > Your Fortunes For Today </h2>
+    <button id="fortuneButton">Lucky Fortune</button>
+    <h4 id="fortunes"> $5 per Fortune, Pay Upfront</h4>
+    <ul></ul>
+  </div>
+  
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+
+      const listElement = document.querySelector("ul");
+      const postElement = document.getElementById("userPost")
+
+      document.getElementById("complimentButton").onclick = function () {
+        axios.get("http://localhost:4000/api/compliment/")
+            .then(function (response) {
+              const data = response.data;
+              alert(data);
+            });
+      };
+
+
+      document.getElementById("fortuneButton").onclick = function () {
+        axios.get("http://localhost:4000/api/fortune/")
+              .then(function (res) {
+              const fortune = res.data;
+              // let counter = 0;
+              // counter++;
+              let displayFortune = document.createElement("li");
+              displayFortune.textContent = fortune;
+              listElement.appendChild(displayFortune)
+            //   if (counter >= 5) {
+            //     document.getElementById("ul").disabled=true;
+            //     alert("Only 5 free Fortunes Per Day");
+            //     }
+              } 
+            )};
+
+      document.getElementById("happy").onclick = function () {
+        axios.get("http://localhost:4000/api/happy")
+        .then(function (res) {
+          const feelings = res.data;
+          alert(feelings);
+        });
+      };
+
+      document.getElementById("sad").onclick = function () {
+        axios.get("http://localhost:4000/api/sad")
+        .then(function (res) {
+          const feelings = res.data;
+          alert(feelings);
+        });
+      };
+
+      document.getElementById("angry").onclick = function () {
+        axios.get("http://localhost:4000/api/angry")
+        .then(function (res) {
+          const feelings = res.data;
+          alert(feelings);
+        });
+      };
+
+      document.getElementById("submitButton").onclick = function (e) {
+        e.preventDefault();
+        let textInput = document.getElementById("textForm").value;
+        axios.post(`http://localhost:4000/api/post`, { text: textInput } )
+          .then(function (res) {
+            const userPost= res.data;
+            let displayPost = document.createElement("p");
+            displayPost.textContent = userPost;
+            postElement.appendChild(displayPost)
+        });
+      };
+
+
+    </script>
+  </body>
+</html>
